@@ -63,6 +63,7 @@ Esta biblioteca resolve isso num lugar só: modelos com endereço, telefone, moe
 - [Modelos de JSON-LD prontos para copiar](#modelos-de-json-ld-prontos-para-copiar)
 - [Guias desta biblioteca](#guias-desta-biblioteca)
 - [Como usar um modelo](#como-usar-um-modelo)
+- [Como instalar o JSON-LD no seu site](#como-instalar-o-json-ld-no-seu-site)
 - [Quais dados estruturados o Google ainda usa](#quais-dados-estruturados-o-google-ainda-usa)
 - [O que perdeu o resultado enriquecido](#o-que-perdeu-o-resultado-enriquecido)
 - [Como validar dados estruturados](#como-validar-dados-estruturados)
@@ -76,9 +77,9 @@ Esta biblioteca resolve isso num lugar só: modelos com endereço, telefone, moe
 
 | Modelo | Quando usar | Situação no Google |
 |:---|:---|:---|
-| [Organization e OnlineStore](modelos/schema-organization-json-ld.md) | Identidade da empresa ou da loja online: nome, logo, CNPJ, contato, perfis, frete e devolução | Ativo |
+| [Organization e OnlineStore](modelos/schema-organization-json-ld.md) | Identidade da empresa ou da loja online: nome, logo, CNPJ, contato, perfis, frete, devolução e programa de fidelidade | Ativo |
 | [LocalBusiness](modelos/schema-local-business-json-ld.md) | Empresa com endereço físico: clínica, loja, restaurante, escritório | Ativo |
-| [Product](modelos/schema-product-json-ld.md) | Página de produto: valor, estoque, avaliação, variantes, frete e devolução | Ativo |
+| [Product](modelos/schema-product-json-ld.md) | Página de produto: valor, valor de membro, estoque, avaliação, variantes, frete e devolução | Ativo |
 | [Article e BlogPosting](modelos/schema-article-json-ld.md) | Artigo, post de blog ou notícia, com autor e datas | Ativo |
 | [BreadcrumbList](modelos/schema-breadcrumblist-json-ld.md) | Trilha de navegação de qualquer página interna | Ativo |
 | [WebSite](modelos/schema-website-nome-do-site-json-ld.md) | Nome do site nos resultados, na página inicial | Ativo |
@@ -88,7 +89,7 @@ Esta biblioteca resolve isso num lugar só: modelos com endereço, telefone, moe
 | [JobPosting](modelos/schema-jobposting-vagas-json-ld.md) | Vaga de emprego na página de carreiras | Ativo |
 | [VideoObject](modelos/schema-videoobject-json-ld.md) | Vídeo na página, com miniatura, duração e momentos-chave | Ativo |
 | [SoftwareApplication](modelos/schema-softwareapplication-json-ld.md) | Aplicativo, software ou SaaS | Ativo |
-| [Course](modelos/schema-course-cursos-json-ld.md) | Lista de cursos de uma instituição | Ativo com restrição |
+| [Course e Quiz](modelos/schema-course-cursos-json-ld.md) | Lista de cursos de uma instituição e flashcards educacionais | Ativo; Ativo com restrição |
 | [Recipe](modelos/schema-recipe-receita-json-ld.md) | Receita com ingredientes, passos e tempos | Ativo |
 | [FAQPage](modelos/schema-faqpage-json-ld.md) | Perguntas frequentes: sem resultado enriquecido no Google desde 07/05/2026 | Descontinuado |
 
@@ -102,7 +103,7 @@ Esta biblioteca resolve isso num lugar só: modelos com endereço, telefone, moe
 ## Como usar um modelo?
 
 1. Escolha o modelo do tipo de página: produto, artigo, empresa, unidade, vaga.
-2. Copie o código e troque cada valor de exemplo (`exemplo.com.br`, nomes, endereço, telefone) pelos dados reais, os mesmos que aparecem na página.
+2. Copie o código e troque cada valor de exemplo (`exemplo.com.br`, nomes, endereço, telefone, valores e datas) pelos dados reais, os mesmos que aparecem na página. As datas dos modelos são ilustrativas.
 3. Apague as propriedades que você não tem como preencher com verdade. Campo vazio ou inventado é pior do que campo ausente.
 4. Cole o código dentro de uma tag de script, no `<head>` ou no `<body>` da página:
 
@@ -121,6 +122,20 @@ Esta biblioteca resolve isso num lugar só: modelos com endereço, telefone, moe
 
 A regra que vale para todos os modelos: a marcação descreve o que está visível na página. O Google pede isso nas [diretrizes gerais de dados estruturados](https://developers.google.com/search/docs/appearance/structured-data/sd-policies?hl=pt-br), e marcação de conteúdo invisível ou enganoso pode gerar ação manual, que tira a página dos resultados enriquecidos.
 
+## Como instalar o JSON-LD no seu site?
+
+O código é o mesmo em qualquer plataforma; o que muda é onde colar. Antes de colar, passe uma página no [Teste de pesquisa aprimorada](https://search.google.com/test/rich-results) para ver o que o site já gera: plugins, temas e plataformas de loja costumam criar parte da marcação sozinhos, e duas versões da mesma entidade com dados diferentes confundem quem lê.
+
+| Onde o site roda | Onde colar | Cuidado |
+|:---|:---|:---|
+| WordPress | O plugin de SEO gera a base (Organization, WebSite, Article, BreadcrumbList); tipos extras vão num campo de código do cabeçalho ou num plugin de inserção de código | Desligue no plugin o tipo que você for colar à mão, para não duplicar |
+| Shopify | No código do tema, nos arquivos da página de produto ou do layout | Muitos temas já trazem a marcação de produto; ajuste a existente em vez de colar outra |
+| VTEX, Nuvemshop e outras plataformas de loja | Na área de código do tema ou da loja, conforme a plataforma | Confira o Product que a plataforma já gera e complete o que falta, como frete, devolução e GTIN |
+| Google Tag Manager | Numa tag de HTML personalizado com o script | O Google lê JSON-LD inserido por JavaScript, mas pede o Product no HTML inicial; use para tipos de identidade, não para produto |
+| Site próprio | No template de cada tipo de página, gerado pelo mesmo banco de dados que monta a página | É o jeito que mantém valor, estoque e datas sempre iguais aos da página |
+
+As particularidades de SEO de cada plataforma de loja estão nas páginas da TRIWI [SEO para VTEX](https://triwi.com.br/seo-para-ecommerce/vtex/?utm_source=github&utm_medium=referral&utm_campaign=repo-dados-estruturados&utm_content=readme), [SEO para Shopify](https://triwi.com.br/seo-para-ecommerce/shopify/?utm_source=github&utm_medium=referral&utm_campaign=repo-dados-estruturados&utm_content=readme), [SEO para Nuvemshop](https://triwi.com.br/seo-para-ecommerce/nuvemshop/?utm_source=github&utm_medium=referral&utm_campaign=repo-dados-estruturados&utm_content=readme) e [SEO para WooCommerce](https://triwi.com.br/seo-para-ecommerce/woocommerce/?utm_source=github&utm_medium=referral&utm_campaign=repo-dados-estruturados&utm_content=readme).
+
 ## Quais dados estruturados o Google ainda usa?
 
 25 recursos de dados estruturados seguem ativos na Pesquisa Google, segundo a [galeria oficial](https://developers.google.com/search/docs/appearance/structured-data/search-gallery?hl=pt-br) e as páginas de cada recurso, conferidas em 09/11/2026. O Google não garante o resultado enriquecido nem com a marcação perfeita: ela torna a página elegível.
@@ -134,7 +149,7 @@ A regra que vale para todos os modelos: a marcação descreve o que está visív
 | [Variantes de produto](https://developers.google.com/search/docs/appearance/structured-data/product-variants) | ProductGroup; Product | Agrupa variantes (cor, tamanho) do mesmo produto nos resultados de compra | Médio: evita que cada cor ou tamanho pareça um produto diferente | [ver modelo](modelos/schema-product-json-ld.md) |
 | [Política de devolução](https://developers.google.com/search/docs/appearance/structured-data/return-policy) | MerchantReturnPolicy | Condições de devolução junto do produto e no painel do comerciante | Médio: responde a pergunta de compra que o assistente faz antes de recomendar uma loja | [ver modelo](modelos/schema-product-json-ld.md) |
 | [Política de frete](https://developers.google.com/search/docs/appearance/structured-data/shipping-policy) | ShippingService (em Organization.hasShippingService) | Condições de frete da loja nos resultados de compra | Médio: prazo e custo de entrega declarados para comparação | [ver modelo](modelos/schema-organization-json-ld.md) |
-| [Programa de fidelidade](https://developers.google.com/search/docs/appearance/structured-data/loyalty-program) | MemberProgram; MemberProgramTier | Benefícios e valores de membro junto da oferta; disponível no Brasil | Baixo: útil só para varejo com programa de pontos ou clube |  |
+| [Programa de fidelidade](https://developers.google.com/search/docs/appearance/structured-data/loyalty-program) | MemberProgram; MemberProgramTier | Benefícios e valores de membro junto da oferta; disponível no Brasil | Baixo: útil só para varejo com programa de pontos ou clube | [ver modelo](modelos/schema-organization-json-ld.md) |
 | [Artigo](https://developers.google.com/search/docs/appearance/structured-data/article) | Article; NewsArticle; BlogPosting | Ajuda o Google a mostrar o título, a imagem e a data certos do artigo | Alto: autoria e datas declaradas, os sinais de quem escreveu e de quando que a IA usa para escolher a fonte | [ver modelo](modelos/schema-article-json-ld.md) |
 | [Trilha de navegação](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb) | BreadcrumbList; ListItem | A trilha de navegação no lugar do endereço da página, só nos resultados no computador | Médio: mostra onde a página está na hierarquia do site | [ver modelo](modelos/schema-breadcrumblist-json-ld.md) |
 | [Nome do site](https://developers.google.com/search/docs/appearance/site-names) | WebSite | O nome do site mostrado acima do título nos resultados | Médio: fixa o nome oficial da marca e as variações aceitas | [ver modelo](modelos/schema-website-nome-do-site-json-ld.md) |
@@ -148,7 +163,7 @@ A regra que vale para todos os modelos: a marcação descreve o que está visív
 | [Página de perfil](https://developers.google.com/search/docs/appearance/structured-data/profile-page) | ProfilePage; Person; Organization | Ajuda o Google a identificar o autor ou o usuário por trás do conteúdo, em fóruns e sites sociais | Alto: a página de autor com credencial e perfis externos é o que liga o conteúdo a uma pessoa real | [ver modelo](modelos/schema-profilepage-person-autor-json-ld.md) |
 | [Fórum de discussão](https://developers.google.com/search/docs/appearance/structured-data/discussion-forum) | DiscussionForumPosting; SocialMediaPosting | Conversas de fórum nos resultados de fóruns | Médio: separa autor, data e resposta em discussões de usuários |  |
 | [Página de perguntas e respostas](https://developers.google.com/search/docs/appearance/structured-data/qapage) | QAPage; Question; Answer | A pergunta e as respostas de usuários em destaque no resultado | Médio: só para páginas em que usuários enviam respostas |  |
-| [Perguntas educacionais (flashcards)](https://developers.google.com/search/docs/appearance/structured-data/education-qa) | Quiz; Question; Answer | Carrossel de flashcards em buscas educacionais, com suporte a português | Baixo: nicho de sites de estudo |  |
+| [Perguntas educacionais (flashcards)](https://developers.google.com/search/docs/appearance/structured-data/education-qa) | Quiz; Question; Answer | Carrossel de flashcards em buscas educacionais, com suporte a português | Baixo: nicho de sites de estudo | [ver modelo](modelos/schema-course-cursos-json-ld.md) |
 | [Resolvedor de matemática](https://developers.google.com/search/docs/appearance/structured-data/math-solvers) | MathSolver; LearningResource | Ferramenta de resolver expressões matemáticas em destaque | Baixo: nicho de ferramentas educacionais |  |
 | [Metadados de imagem](https://developers.google.com/search/docs/appearance/structured-data/image-license-metadata) | ImageObject | Autor, crédito e selo de licença da imagem no Google Imagens | Baixo: útil para quem licencia imagens |  |
 | [Conteúdo com assinatura (paywall)](https://developers.google.com/search/docs/appearance/structured-data/paywalled-content) | CreativeWork e subtipos (Article, NewsArticle e outros) | Não gera visual próprio: separa conteúdo com paywall de cloaking | Médio: declara o que é fechado para assinantes |  |
@@ -157,16 +172,20 @@ Outros 8 seguem ativos com restrição de idioma, país, dispositivo ou parceiro
 
 ## O que perdeu o resultado enriquecido?
 
-Desde 2023, 10 recursos saíram da Pesquisa Google. Os mais conhecidos:
+Desde 2023, 10 recursos saíram da Pesquisa Google, do mais recente para o mais antigo:
 
-| Recurso | Saiu em | O que fica |
+| Recurso no Google | Saiu em | O que fica para as IAs |
 |:---|:---|:---|
-| Perguntas frequentes (FAQPage) | 07/05/2026 | As perguntas e respostas no texto, ver [Schema FAQPage](modelos/schema-faqpage-json-ld.md) |
-| Problemas de prática | 06/01/2026 | Nada no Google |
-| Informações do curso, salário estimado, vídeo educacional, anúncio de veículo | 09/09/2025 | Lista de cursos e vídeo comum seguem ativos |
-| Anúncio especial | 31/07/2025 | Nada no Google |
-| Caixa de pesquisa de sitelinks | 29/11/2024 | O WebSite segue valendo para o nome do site |
-| How-to (HowTo) | 14/09/2023 | O passo a passo em lista numerada no texto |
+| Perguntas frequentes (FAQ) | 07/05/2026 | Alto, no texto: pergunta e resposta visíveis na página continuam fáceis de extrair para quem lê e para a IA; a marcação vira opcional. Ver [modelo](modelos/schema-faqpage-json-ld.md). |
+| Problemas de prática | 06/01/2026 | Baixo: os exercícios seguem úteis como texto; a marcação não tem uso documentado fora do recurso. |
+| Informações do curso | 09/09/2025 | Médio: modalidade, carga horária e instituição seguem úteis como texto visível na página do curso. Ver [modelo](modelos/schema-course-cursos-json-ld.md). |
+| Salário estimado | 09/09/2025 | Baixo: faixa salarial estimada por terceiros; o salário real da vaga vai em JobPosting com baseSalary. |
+| Vídeo educacional | 09/09/2025 | Médio: assunto e nível de ensino do vídeo seguem úteis como texto visível na página. Ver [modelo](modelos/schema-videoobject-json-ld.md). |
+| Anúncio de veículo | 09/09/2025 | Médio: marca, modelo, ano e quilometragem seguem úteis como texto visível no anúncio. |
+| Anúncio especial | 31/07/2025 | Baixo: avisos temporários, criados para a pandemia, sem informação durável sobre a marca. |
+| Caixa de pesquisa de sitelinks | 29/11/2024 | Baixo: descrevia só a busca interna do site; o nome oficial da marca vai no WebSite, que segue ativo. Ver [modelo](modelos/schema-website-nome-do-site-json-ld.md). |
+| Atividades em casa | 11/06/2024 | Baixo: atividades online datadas, criadas para a pandemia, sem informação durável sobre a marca. |
+| Instruções passo a passo (How-to) | 14/09/2023 | Médio, no texto: passos numerados visíveis continuam úteis para quem lê e para a IA. Ver [modelo](dados-estruturados-que-perderam-resultado-enriquecido-no-google.md). |
 
 A tabela completa, com fonte de cada data e o que fazer com a marcação antiga, está em [Dados estruturados que perderam o resultado enriquecido no Google](dados-estruturados-que-perderam-resultado-enriquecido-no-google.md).
 
@@ -231,7 +250,7 @@ Schema.org é o vocabulário, com os tipos e as propriedades. JSON-LD é o forma
 <details>
 <summary><strong>Dados estruturados melhoram a posição no Google?</strong></summary>
 
-Não diretamente. Eles tornam a página elegível a resultados enriquecidos, como estrelas, valor e trilha de navegação, que podem atrair mais cliques, e ajudam o Google a entender a página. A posição depende do conteúdo e dos demais sinais.
+Não diretamente. John Mueller, do Google, disse em abril de 2025 que dados estruturados não fazem o site ranquear melhor ([Search Engine Journal](https://www.searchenginejournal.com/google-confirms-that-structured-data-wont-make-a-site-rank-better/544433/)). Eles tornam a página elegível a resultados enriquecidos, como estrelas, valor e trilha de navegação, que podem atrair mais cliques, e ajudam o Google a entender a página.
 </details>
 
 <details>
@@ -268,6 +287,7 @@ Sim. Os modelos, os textos e a base de dados estão sob licença [CC BY 4.0](LIC
 
 | Data | O que mudou |
 |:---|:---|
+| 09/11/2026 | Programa de fidelidade e valor de membro nos modelos de Organization e Product; flashcards educacionais no modelo de Course; coluna schema_org na base; seção de instalação por plataforma; fonte oficial nas regras de horário, nome do site e trilha de navegação |
 | 09/11/2026 | Publicação da biblioteca com 15 modelos, dois guias e a base aberta com 43 tipos de dados estruturados |
 
 ## Como citar
