@@ -27,7 +27,7 @@ A marcação faz mais sentido na página que descreve a empresa ou a unidade: a 
 
 ## Quais campos o Google exige e recomenda?
 
-**Empresa local** (LocalBusiness e subtipos (Restaurant, Dentist, Store e outros)), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/local-business):
+**Empresa local** (LocalBusiness e subtipos (Restaurant, Dentist, Store e outros)), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/local-business); o tipo no vocabulário está em [schema.org/LocalBusiness](https://schema.org/LocalBusiness):
 
 | Exigência | Campos |
 |:---|:---|
@@ -112,7 +112,7 @@ Troque `Dentist` pelo subtipo do seu negócio (lista abaixo) e cole dentro de um
 }
 ```
 
-Para fechar em um feriado ou numa temporada, acrescente uma `OpeningHoursSpecification` com `validFrom` e `validThrough` (datas no formato AAAA-MM-DD) e `opens` e `closes` iguais a `00:00:00`. Restaurante usa ainda `servesCuisine` e `menu` (a URL do cardápio).
+Para fechar em um feriado ou numa temporada, acrescente uma `OpeningHoursSpecification` com `validFrom` e `validThrough` (datas no formato AAAA-MM-DD) e `opens` e `closes` iguais a `00:00`. Para aberto 24 horas, `opens` igual a `00:00` e `closes` igual a `23:59`. As duas regras estão na seção de horários da [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/local-business). Restaurante usa ainda `servesCuisine` e `menu` (a URL do cardápio).
 
 ## Como marcar uma rede com várias unidades?
 

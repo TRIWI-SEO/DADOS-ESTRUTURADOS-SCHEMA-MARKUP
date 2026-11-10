@@ -23,7 +23,7 @@ Em todo site, uma vez, na página inicial. O nome do site vale para o domínio (
 
 ## Quais campos o Google exige e recomenda?
 
-**Nome do site** (WebSite), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/site-names):
+**Nome do site** (WebSite), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/site-names); o tipo no vocabulário está em [schema.org/WebSite](https://schema.org/WebSite):
 
 | Exigência | Campos |
 |:---|:---|
@@ -82,7 +82,7 @@ A caixa de busca interna que aparecia abaixo de alguns resultados usava o mesmo 
 
 1. Cole o código no [Schema Markup Validator](https://validator.schema.org/) para conferir a sintaxe; o nome do site não tem relatório próprio no Teste de pesquisa aprimorada.
 2. Use a Inspeção de URL do Search Console na página inicial para confirmar que o Google leu a marcação.
-3. Mudanças de nome levam tempo para aparecer: o Google precisa rastrear a página inicial de novo.
+3. Mudanças de nome levam de alguns dias a algumas semanas para aparecer, porque o Google precisa rastrear a página inicial de novo.
 
 ## O que o schema WebSite vale para as IAs?
 
@@ -95,7 +95,7 @@ O nome que a marca usa, as variações aceitas e o domínio oficial são a prime
 <details>
 <summary><strong>O Google mostra um nome errado para o meu site. O que fazer?</strong></summary>
 
-Confira se o `name` do WebSite é igual ao título da página inicial, ao nome no Organization e ao que aparece nos perfis oficiais. A documentação lista outras fontes que o Google considera, como o título e os cabeçalhos da página inicial; quanto mais consistentes elas forem, mais chance de o nome certo aparecer.
+A [documentação do Google](https://developers.google.com/search/docs/appearance/site-names) diz que a marcação WebSite é o sinal mais importante, e que o sistema também considera o `og:site_name`, o título e os cabeçalhos da página inicial e referências ao site em outros lugares da web. O caminho: deixar o mesmo nome em todos esses lugares, conferir se a página inicial não redireciona para outra, usar a mesma marcação nas versões com e sem `www`, acrescentar variações em `alternateName` (o domínio, em minúsculas, pode ser uma delas) e pedir novo rastreamento pela Inspeção de URL. A mudança leva de alguns dias a algumas semanas.
 </details>
 
 <details>

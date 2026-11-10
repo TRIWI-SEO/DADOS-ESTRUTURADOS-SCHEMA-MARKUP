@@ -30,7 +30,7 @@ A marcação não é exclusiva de sites de notícia: a documentação do Google 
 
 ## Quais campos o Google exige e recomenda?
 
-**Artigo** (Article; NewsArticle; BlogPosting), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/article):
+**Artigo** (Article; NewsArticle; BlogPosting), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/article); o tipo no vocabulário está em [schema.org/Article](https://schema.org/Article):
 
 | Exigência | Campos |
 |:---|:---|
@@ -147,7 +147,7 @@ Quem escreveu, com que credencial e quando o texto foi revisado são perguntas q
 <details>
 <summary><strong>O schema Article é fator de ranqueamento?</strong></summary>
 
-Não. A marcação ajuda o Google a entender a página e a mostrar título, imagem e data com mais precisão. O ranqueamento depende do conteúdo e dos demais sinais da página.
+Não. John Mueller, do Google, disse em abril de 2025 que dados estruturados não fazem o site ranquear melhor ([Search Engine Journal](https://www.searchenginejournal.com/google-confirms-that-structured-data-wont-make-a-site-rank-better/544433/)). A marcação ajuda o Google a entender a página e a mostrar título, imagem e data com mais precisão.
 </details>
 
 <details>

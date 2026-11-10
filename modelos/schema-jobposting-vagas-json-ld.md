@@ -23,7 +23,7 @@ Em cada página de vaga do site de carreiras: uma vaga, uma página, uma marcaç
 
 ## Quais campos o Google exige e recomenda?
 
-**Vaga de emprego** (JobPosting), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/job-posting):
+**Vaga de emprego** (JobPosting), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/job-posting); o tipo no vocabulário está em [schema.org/JobPosting](https://schema.org/JobPosting):
 
 | Exigência | Campos |
 |:---|:---|
@@ -110,7 +110,7 @@ Cole dentro de uma tag `<script type="application/ld+json">` na página da vaga.
 }
 ```
 
-Os valores de `employmentType` são fixos e em inglês: `FULL_TIME`, `PART_TIME`, `CONTRACTOR`, `TEMPORARY`, `INTERN`, `VOLUNTEER`, `PER_DIEM` e `OTHER`. Estágio usa `INTERN`; contratação como pessoa jurídica costuma usar `CONTRACTOR`. `directApply` é `true` só quando a candidatura é feita no próprio site, sem redirecionar para outra plataforma.
+As datas do exemplo são ilustrativas: use a data real de publicação e de encerramento da vaga. Os valores de `employmentType` são fixos e em inglês: `FULL_TIME`, `PART_TIME`, `CONTRACTOR`, `TEMPORARY`, `INTERN`, `VOLUNTEER`, `PER_DIEM` e `OTHER`. Estágio usa `INTERN`; contratação como pessoa jurídica costuma usar `CONTRACTOR`. `directApply` é `true` só quando a candidatura é feita no próprio site, sem redirecionar para outra plataforma.
 
 ## Modelo de vaga remota
 

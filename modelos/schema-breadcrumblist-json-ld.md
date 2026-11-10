@@ -21,11 +21,11 @@
 
 Em toda página interna que tem trilha de navegação visível: produto, categoria, post de blog, página de serviço, página de unidade. A página inicial não precisa.
 
-A trilha deve mostrar o caminho típico de um usuário até a página, não necessariamente a estrutura de pastas da URL.
+A [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb) recomenda que a trilha mostre o caminho típico de um usuário até a página, em vez de copiar a estrutura de pastas da URL.
 
 ## Quais campos o Google exige e recomenda?
 
-**Trilha de navegação** (BreadcrumbList; ListItem), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb):
+**Trilha de navegação** (BreadcrumbList; ListItem), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb); o tipo no vocabulário está em [schema.org/BreadcrumbList](https://schema.org/BreadcrumbList):
 
 | Exigência | Campos |
 |:---|:---|

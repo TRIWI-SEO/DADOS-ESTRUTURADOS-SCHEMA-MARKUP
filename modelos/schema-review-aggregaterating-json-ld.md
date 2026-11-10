@@ -25,7 +25,7 @@ Na prática, os casos mais comuns são produto em loja online, curso, aplicativo
 
 ## Quais campos o Google exige e recomenda?
 
-**Trecho de avaliação** (Review; AggregateRating), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/review-snippet):
+**Trecho de avaliação** (Review; AggregateRating), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/review-snippet); o tipo no vocabulário está em [schema.org/Review](https://schema.org/Review):
 
 | Exigência | Campos |
 |:---|:---|

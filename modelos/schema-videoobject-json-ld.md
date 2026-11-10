@@ -22,7 +22,7 @@ Na página do seu site em que o vídeo é o conteúdo principal ou um conteúdo 
 
 ## Quais campos o Google exige e recomenda?
 
-**Vídeo** (VideoObject; Clip; SeekToAction), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/video):
+**Vídeo** (VideoObject; Clip; SeekToAction), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/video); o tipo no vocabulário está em [schema.org/VideoObject](https://schema.org/VideoObject):
 
 | Exigência | Campos |
 |:---|:---|

@@ -22,7 +22,7 @@ Na página de um aplicativo ou software: página de download, página do produto
 
 ## Quais campos o Google exige e recomenda?
 
-**Aplicativo de software** (SoftwareApplication; MobileApplication; WebApplication), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/software-app):
+**Aplicativo de software** (SoftwareApplication; MobileApplication; WebApplication), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/software-app); o tipo no vocabulário está em [schema.org/SoftwareApplication](https://schema.org/SoftwareApplication):
 
 | Exigência | Campos |
 |:---|:---|

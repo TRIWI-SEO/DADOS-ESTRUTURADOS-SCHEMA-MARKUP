@@ -23,7 +23,7 @@ Em página de evento presencial que qualquer pessoa pode frequentar ou comprar i
 
 ## Quais campos o Google exige e recomenda?
 
-**Evento** (Event), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/event):
+**Evento** (Event), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/event); o tipo no vocabulário está em [schema.org/Event](https://schema.org/Event):
 
 | Exigência | Campos |
 |:---|:---|
@@ -36,7 +36,7 @@ Em página de evento presencial que qualquer pessoa pode frequentar ou comprar i
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Congresso Exemplo de Gestão em Saúde 2027",
+  "name": "Congresso Exemplo de Gestão em Saúde",
   "startDate": "2027-03-18T09:00:00-03:00",
   "endDate": "2027-03-19T18:00:00-03:00",
   "location": {
@@ -62,7 +62,7 @@ Cole dentro de uma tag `<script type="application/ld+json">` na página do event
 {
   "@context": "https://schema.org",
   "@type": "BusinessEvent",
-  "name": "Congresso Exemplo de Gestão em Saúde 2027",
+  "name": "Congresso Exemplo de Gestão em Saúde",
   "description": "Dois dias de palestras sobre gestão de clínicas, faturamento de convênios e tecnologia em saúde.",
   "image": [
     "https://www.exemplo.com.br/imagens/congresso-1x1.jpg",
@@ -104,7 +104,7 @@ Cole dentro de uma tag `<script type="application/ld+json">` na página do event
 }
 ```
 
-Evento gratuito usa `"price": 0`. Evento de vários dias leva `startDate` e `endDate`; apresentações em dias diferentes, cada uma com o próprio ingresso, ganham um `Event` para cada data.
+As datas do exemplo são ilustrativas: troque pelas datas reais do evento, com o fuso horário. Evento gratuito usa `"price": 0`. Evento de vários dias leva `startDate` e `endDate`; apresentações em dias diferentes, cada uma com o próprio ingresso, ganham um `Event` para cada data.
 
 ## Como marcar evento adiado ou cancelado?
 

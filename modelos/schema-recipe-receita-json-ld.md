@@ -22,7 +22,7 @@ Na página de uma receita com ingredientes e modo de preparo visíveis: blog de 
 
 ## Quais campos o Google exige e recomenda?
 
-**Receita** (Recipe), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/recipe):
+**Receita** (Recipe), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/recipe); o tipo no vocabulário está em [schema.org/Recipe](https://schema.org/Recipe):
 
 | Exigência | Campos |
 |:---|:---|

@@ -24,7 +24,7 @@ Para empresas, o uso mais valioso é a página de autor: cada especialista que a
 
 ## Quais campos o Google exige e recomenda?
 
-**Página de perfil** (ProfilePage; Person; Organization), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/profile-page):
+**Página de perfil** (ProfilePage; Person; Organization), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/profile-page); o tipo no vocabulário está em [schema.org/ProfilePage](https://schema.org/ProfilePage):
 
 | Exigência | Campos |
 |:---|:---|
