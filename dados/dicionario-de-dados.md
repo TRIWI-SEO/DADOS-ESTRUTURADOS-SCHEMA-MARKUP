@@ -23,6 +23,7 @@ Se o Excel mostrar os acentos embaralhados, abra pelo menu Dados, opção De Tex
 | id | Identificador curto do recurso, em minúsculas e com hífen |
 | recurso_google | Nome do recurso em português, como a documentação do Google o apresenta |
 | tipo_schema | Tipo ou tipos do schema.org usados pelo recurso |
+| schema_org | Endereço do tipo principal no vocabulário do schema.org |
 | situacao_no_google | Ativo; Ativo com restrição; Em retirada; Descontinuado (ver abaixo) |
 | mudanca_em | Data da última mudança de situação ou de exigência registrada pelo Google; n/d quando não há registro relevante |
 | o_que_aparece | O que o recurso gera na Pesquisa Google, ou o que deixou de gerar |
