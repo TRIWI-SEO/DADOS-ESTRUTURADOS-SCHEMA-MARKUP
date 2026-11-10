@@ -196,8 +196,8 @@ Cada post com `BlogPosting` e autor; cada autor com página própria. O `Blog` l
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "O que muda na declaração do imposto de renda em 2027",
-      "image": "https://www.exemplo.com.br/imagens/ir-2027-16x9.jpg",
+      "headline": "Como declarar investimentos no imposto de renda",
+      "image": "https://www.exemplo.com.br/imagens/ir-investimentos-16x9.jpg",
       "datePublished": "2026-11-09T09:00:00-03:00",
       "dateModified": "2026-11-09T09:00:00-03:00",
       "author": {
@@ -213,7 +213,7 @@ Cada post com `BlogPosting` e autor; cada autor com página própria. O `Blog` l
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.exemplo.com.br/"},
         {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.exemplo.com.br/blog/"},
-        {"@type": "ListItem", "position": 3, "name": "O que muda na declaração do imposto de renda em 2027"}
+        {"@type": "ListItem", "position": 3, "name": "Como declarar investimentos no imposto de renda"}
       ]
     }
   ]
@@ -321,7 +321,7 @@ Resolve a base, como Organization, WebSite, Article e BreadcrumbList, e às veze
 <details>
 <summary><strong>Mais schemas na página melhoram a posição no Google?</strong></summary>
 
-Não. Dados estruturados não são fator de ranqueamento, e marcar tipos que não correspondem à página contraria as diretrizes. O ganho vem da marcação certa e completa, não da quantidade.
+Não. John Mueller, do Google, disse em abril de 2025 que dados estruturados não fazem o site ranquear melhor ([Search Engine Journal](https://www.searchenginejournal.com/google-confirms-that-structured-data-wont-make-a-site-rank-better/544433/)), e marcar tipos que não correspondem à página contraria as [diretrizes do Google](https://developers.google.com/search/docs/appearance/structured-data/sd-policies?hl=pt-br). O ganho vem da marcação certa e completa, não da quantidade.
 </details>
 
 **Ver também na Base de Conhecimento da TRIWI:** [Schema Markup e Dados Estruturados para SEO](https://github.com/TRIWI-SEO/SEO-IA/blob/main/seo-tecnico/schema-markup-e-dados-estruturados-para-seo.md), [Dados Estruturados para IA: Schema Markup na Era Generativa](https://github.com/TRIWI-SEO/SEO-IA/blob/main/geo-seo-para-ia/dados-estruturados-para-ia-schema-markup-na-era-generativa.md).
