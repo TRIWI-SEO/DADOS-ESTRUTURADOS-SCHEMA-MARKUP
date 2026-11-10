@@ -1,6 +1,6 @@
 # Schema Course em JSON-LD: modelo para lista de cursos
 
-**O schema Course descreve cursos com nome, descrição e instituição. No Google, gera a lista de cursos em carrossel, que exige pelo menos três cursos marcados e está disponível só em inglês. As informações detalhadas de curso, com modalidade e carga horária, saíram da Pesquisa em 2025.**
+**O schema Course descreve cursos com nome, descrição e instituição. No Google, gera a lista de cursos em carrossel, que exige pelo menos três cursos marcados e está disponível só em inglês. Já os flashcards educacionais, marcados com Quiz, funcionam em português. As informações do curso saíram da Pesquisa em 2025.**
 
 *Por equipe de SEO da TRIWI, com revisão de Ricardo Martins, fundador. Publicado em 09/11/2026. Atualizado em 09/11/2026. Campos conferidos na documentação do Google Search Central e no schema.org (versão 30.1) em 09/11/2026.*
 
@@ -12,6 +12,7 @@
 - [Quais campos o Google exige e recomenda?](#quais-campos-o-google-exige-e-recomenda)
 - [Modelo de JSON-LD para copiar](#modelo-de-json-ld-para-copiar)
 - [Modelo de lista de cursos em carrossel](#modelo-de-lista-de-cursos-em-carrossel)
+- [Modelo de flashcards educacionais](#modelo-de-flashcards-educacionais)
 - [Como validar o schema Course?](#como-validar-o-schema-course)
 - [O que o schema Course vale para as IAs?](#o-que-o-schema-course-vale-para-as-ias)
 - [Perguntas frequentes](#perguntas-frequentes)
@@ -24,19 +25,26 @@ Para sites em português, o carrossel não aparece hoje, porque o recurso está 
 
 ## Quais campos o Google exige e recomenda?
 
-**Lista de cursos** (Course; ItemList), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/course):
+**Lista de cursos** (Course; ItemList), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/course); o tipo no vocabulário está em [schema.org/Course](https://schema.org/Course):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | `Course.name`; `Course.description`; `ItemList.itemListElement`; `ListItem.position`; `ListItem.url` |
 | Recomendados | `Course.provider` |
 
-**Carrossel** (ItemList; ListItem), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/carousel):
+**Carrossel** (ItemList; ListItem), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/carousel); o tipo no vocabulário está em [schema.org/ItemList](https://schema.org/ItemList):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | `itemListElement` (mínimo de dois ListItem do mesmo tipo); `ListItem.position`; `ListItem.url` (página de resumo) ou `ListItem.item`, `item.name` e `item.url` (página com tudo) |
 | Recomendados | Nenhum |
+
+**Perguntas educacionais (flashcards)** (Quiz; Question; Answer), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/education-qa); o tipo no vocabulário está em [schema.org/Quiz](https://schema.org/Quiz):
+
+| Exigência | Campos |
+|:---|:---|
+| Obrigatórios | `hasPart`; `Question.acceptedAnswer`; `Question.eduQuestionType` (valor Flashcard); `Question.text` |
+| Recomendados | `about` |
 
 A descrição do curso aparece com até 60 caracteres no carrossel.
 
@@ -90,6 +98,50 @@ Na página que lista os cursos, a marcação de carrossel aponta para a página 
 
 Avaliações de alunos podem entrar no `Course` com `aggregateRating`, seguindo as regras de [Review e AggregateRating](../modelos/schema-review-aggregaterating-json-ld.md#modelo-de-aggregaterating-para-copiar).
 
+## Modelo de flashcards educacionais
+
+Diferente da lista de cursos, o carrossel de flashcards educacionais do Google aceita português em todas as regiões. Serve para páginas com perguntas e respostas de estudo, como revisão para vestibular, concurso ou certificação. Cada pergunta usa `eduQuestionType` com o valor fixo `Flashcard` e tem uma só resposta.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Quiz",
+  "about": {
+    "@type": "Thing",
+    "name": "Contabilidade de custos"
+  },
+  "educationalAlignment": [
+    {
+      "@type": "AlignmentObject",
+      "alignmentType": "educationalSubject",
+      "targetName": "Contabilidade"
+    }
+  ],
+  "hasPart": [
+    {
+      "@type": "Question",
+      "eduQuestionType": "Flashcard",
+      "text": "O que é custo fixo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "É o custo que não varia com o volume produzido no período, como aluguel e salários administrativos."
+      }
+    },
+    {
+      "@type": "Question",
+      "eduQuestionType": "Flashcard",
+      "text": "O que é ponto de equilíbrio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "É o volume de vendas em que a receita cobre todos os custos e o lucro é zero."
+      }
+    }
+  ]
+}
+```
+
+Regras da [documentação](https://developers.google.com/search/docs/appearance/structured-data/education-qa): as perguntas precisam estar visíveis na página, não só num PDF; a marcação vai na página mais específica, com pelo menos um par de pergunta e resposta educacional; e página com uma pergunta seguida de respostas de usuários usa `QAPage`.
+
 ## Como validar o schema Course?
 
 1. Antes de publicar, cole o código ou a URL no [Teste de pesquisa aprimorada](https://search.google.com/test/rich-results), do Google: ele diz se a marcação está elegível e aponta erros e avisos.
@@ -107,7 +159,7 @@ Quem pergunta a um assistente por cursos de uma área quer nome, instituição, 
 <details>
 <summary><strong>O que eram as informações do curso, que saíram do Google?</strong></summary>
 
-Era um resultado com detalhes como modalidade, carga horária e avaliações, marcado com `Course` e `CourseInstance`. O Google anunciou a retirada em 12/06/2025 e removeu a documentação em 09/09/2025. A lista de cursos em carrossel continua.
+Era um resultado com os detalhes de cada curso, marcado com `Course` e `CourseInstance`, [lançado pelo Google em novembro de 2023](https://developers.google.com/search/blog/2023/11/new-course-info-markup). O Google anunciou a retirada em 12/06/2025 e removeu a documentação em 09/09/2025. A lista de cursos em carrossel continua.
 </details>
 
 <details>
