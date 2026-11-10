@@ -13,6 +13,7 @@
 - [Modelo de JSON-LD para copiar](#modelo-de-json-ld-para-copiar)
 - [Modelo completo de Organization](#modelo-completo-de-organization)
 - [Modelo de OnlineStore para loja online](#modelo-de-onlinestore-para-loja-online)
+- [Modelo de programa de fidelidade](#modelo-de-programa-de-fidelidade)
 - [Como validar o schema Organization?](#como-validar-o-schema-organization)
 - [O que o schema Organization vale para as IAs?](#o-que-o-schema-organization-vale-para-as-ias)
 - [Erros comuns](#erros-comuns)
@@ -35,19 +36,26 @@ O Google recomenda usar o subtipo mais específico que existir no schema.org.
 
 O Google não exige nenhum campo e pede que você inclua todos os que se aplicam ao negócio.
 
-**Organização** (Organization; OnlineStore), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/organization):
+**Organização** (Organization; OnlineStore), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/organization); o tipo no vocabulário está em [schema.org/Organization](https://schema.org/Organization):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | Nenhum |
 | Recomendados | `address`; `alternateName`; `contactPoint`; `description`; `duns`; `email`; `foundingDate`; `globalLocationNumber`; `hasMemberProgram`; `hasMerchantReturnPolicy`; `hasShippingService`; `iso6523Code`; `legalName`; `leiCode`; `logo`; `naics`; `name`; `numberOfEmployees`; `sameAs`; `taxID`; `telephone`; `url`; `vatID` |
 
-**Política de frete** (ShippingService (em Organization.hasShippingService)), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/shipping-policy):
+**Política de frete** (ShippingService (em Organization.hasShippingService)), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/shipping-policy); o tipo no vocabulário está em [schema.org/ShippingService](https://schema.org/ShippingService):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | `shippingConditions` |
 | Recomendados | `description`; `fulfillmentType`; `handlingTime`; `name`; `validForMemberTier` |
+
+**Programa de fidelidade** (MemberProgram; MemberProgramTier), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/loyalty-program); o tipo no vocabulário está em [schema.org/MemberProgram](https://schema.org/MemberProgram):
+
+| Exigência | Campos |
+|:---|:---|
+| Obrigatórios | `description`; `hasTiers`; `name` |
+| Recomendados | `url` |
 
 Três detalhes da documentação que costumam passar despercebidos: o `logo` precisa ter pelo menos 112x112 pixels e uma URL rastreável; o `name` deve ser igual ao nome do site; e o `taxID` precisa corresponder ao país do `address`, o que no Brasil significa o CNPJ.
 
@@ -184,6 +192,57 @@ Para e-commerce, o Google recomenda `OnlineStore` no lugar de `Organization`, co
 ```
 
 O prazo de 7 dias do exemplo é o direito de arrependimento do Código de Defesa do Consumidor para compras fora da loja física; se a sua loja aceita mais tempo, declare o prazo real. Frete e devolução também podem ser configurados no Search Console, e, havendo as duas coisas, o Google usa a configuração do Search Console. O código de cada produto está em [Schema Product](../modelos/schema-product-json-ld.md).
+
+## Modelo de programa de fidelidade
+
+Loja com clube de vantagens ou programa de pontos declara o programa no `OnlineStore`, com `hasMemberProgram`, e cada nível ganha um `@id` para os produtos apontarem. O recurso de programa de fidelidade do Google está disponível no Brasil, segundo a [documentação](https://developers.google.com/search/docs/appearance/structured-data/loyalty-program).
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "@id": "https://www.exemplo.com.br/#organization",
+  "name": "Loja Exemplo",
+  "url": "https://www.exemplo.com.br/",
+  "hasMemberProgram": {
+    "@type": "MemberProgram",
+    "name": "Clube Exemplo",
+    "description": "Valores exclusivos e pontos em cada compra para quem é do clube.",
+    "url": "https://www.exemplo.com.br/clube",
+    "hasTiers": [
+      {
+        "@type": "MemberProgramTier",
+        "@id": "https://www.exemplo.com.br/clube#nivel-prata",
+        "name": "Prata",
+        "hasTierBenefit": "https://schema.org/TierBenefitLoyaltyPoints",
+        "membershipPointsEarned": {
+          "@type": "QuantitativeValue",
+          "value": 1
+        }
+      },
+      {
+        "@type": "MemberProgramTier",
+        "@id": "https://www.exemplo.com.br/clube#nivel-ouro",
+        "name": "Ouro",
+        "hasTierBenefit": [
+          "https://schema.org/TierBenefitLoyaltyPoints",
+          "https://schema.org/TierBenefitLoyaltyPrice"
+        ],
+        "membershipPointsEarned": {
+          "@type": "QuantitativeValue",
+          "value": 2
+        },
+        "hasTierRequirement": {
+          "@type": "CreditCard",
+          "name": "Cartão Loja Exemplo"
+        }
+      }
+    ]
+  }
+}
+```
+
+`membershipPointsEarned` é quantos pontos o membro ganha por unidade de moeda gasta. Sem `hasTierRequirement`, o nível é aberto a qualquer pessoa, sem custo; no exemplo, o nível Ouro exige o cartão de crédito da loja. A documentação aceita como requisito também uma mensalidade (`UnitPriceSpecification`), um valor (`MonetaryAmount`) ou um texto. O valor de membro em cada produto está em [Schema Product](../modelos/schema-product-json-ld.md#modelo-de-valor-para-membro-do-programa-de-fidelidade).
 
 ## Como validar o schema Organization?
 

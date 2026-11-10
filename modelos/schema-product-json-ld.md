@@ -13,6 +13,7 @@
 - [Modelo de JSON-LD para copiar](#modelo-de-json-ld-para-copiar)
 - [Modelo completo com frete e devolução](#modelo-completo-com-frete-e-devolução)
 - [Modelo de produto com variantes](#modelo-de-produto-com-variantes)
+- [Modelo de valor para membro do programa de fidelidade](#modelo-de-valor-para-membro-do-programa-de-fidelidade)
 - [Modelo para página de análise de produto](#modelo-para-página-de-análise-de-produto)
 - [Como validar o schema Product?](#como-validar-o-schema-product)
 - [O que o schema Product vale para as IAs?](#o-que-o-schema-product-vale-para-as-ias)
@@ -32,28 +33,28 @@ A marcação vale para páginas focadas em um produto ou em variantes do mesmo p
 
 ## Quais campos o Google exige e recomenda?
 
-**Produto (listagem do comerciante)** (Product; Offer), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/merchant-listing):
+**Produto (listagem do comerciante)** (Product; Offer), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/merchant-listing); o tipo no vocabulário está em [schema.org/Product](https://schema.org/Product):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | `name`; `image`; `offers`; `offers.price` ou `offers.priceSpecification.price`; `offers.priceCurrency` |
 | Recomendados | `aggregateRating`; `audience`; `brand.name`; `category`; `color`; `description`; `gtin`; `hasAdultConsideration`; `hasCertification`; `inProductGroupWithID`; `isVariantOf`; `material`; `mpn`; `offers.availability`; `offers.hasMerchantReturnPolicy`; `offers.itemCondition`; `offers.priceValidUntil`; `offers.shippingDetails`; `offers.url`; `offers.validFrom`; `offers.validThrough`; `pattern`; `review`; `size`; `sku`; `subjectOf` |
 
-**Produto (trecho de produto)** (Product; Offer; AggregateRating; Review), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/product-snippet):
+**Produto (trecho de produto)** (Product; Offer; AggregateRating; Review), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/product-snippet); o tipo no vocabulário está em [schema.org/Product](https://schema.org/Product):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | `name`; `review`, `aggregateRating` ou `offers` (um deles); `offers.price` ou `offers.priceSpecification.price` |
 | Recomendados | `aggregateRating`; `offers`; `offers.availability`; `offers.priceCurrency`; `offers.priceValidUntil`; `review` |
 
-**Variantes de produto** (ProductGroup; Product), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/product-variants):
+**Variantes de produto** (ProductGroup; Product), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/product-variants); o tipo no vocabulário está em [schema.org/ProductGroup](https://schema.org/ProductGroup):
 
 | Exigência | Campos |
 |:---|:---|
 | Obrigatórios | `name` (no ProductGroup); identificador único em cada variante (`sku` ou `gtin`); vínculo da variante ao grupo (`productGroupID`, `inProductGroupWithID` ou `isVariantOf`) |
 | Recomendados | `aggregateRating`; `brand`; `description`; `hasAdultConsideration`; `hasVariant`; `productGroupID`; `review`; `url`; `variesBy` |
 
-**Política de devolução** (MerchantReturnPolicy), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/return-policy):
+**Política de devolução** (MerchantReturnPolicy), segundo a [documentação do Google](https://developers.google.com/search/docs/appearance/structured-data/return-policy); o tipo no vocabulário está em [schema.org/MerchantReturnPolicy](https://schema.org/MerchantReturnPolicy):
 
 | Exigência | Campos |
 |:---|:---|
@@ -124,7 +125,6 @@ O valor vai com ponto como separador decimal e sem símbolo de moeda; a moeda va
     "url": "https://www.exemplo.com.br/cadeira-ergo",
     "price": 1299.90,
     "priceCurrency": "BRL",
-    "priceValidUntil": "2026-12-31",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition",
     "seller": {
@@ -226,6 +226,37 @@ Para um produto em várias cores ou tamanhos, o `ProductGroup` reúne as variant
 ```
 
 O `variesBy` usa a URL completa da propriedade no schema.org. Não use `AggregateOffer` para descrever variantes: a documentação reserva esse tipo para várias ofertas do mesmo produto.
+
+## Modelo de valor para membro do programa de fidelidade
+
+Loja com programa de fidelidade pode mostrar, junto do valor normal, o valor para membros de um nível do programa. O recurso está disponível no Brasil. O valor normal fica em `price` e o de membro vai numa `UnitPriceSpecification` com `validForMemberTier`, que aponta para o `@id` do nível declarado no `OnlineStore`, como em [Schema Organization](../modelos/schema-organization-json-ld.md#modelo-de-programa-de-fidelidade).
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Cafeteira Exemplo Prima",
+  "image": "https://www.exemplo.com.br/imagens/cafeteira-prima.jpg",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://www.exemplo.com.br/cafeteira-prima",
+    "price": 399.90,
+    "priceCurrency": "BRL",
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": 359.90,
+      "priceCurrency": "BRL",
+      "validForMemberTier": {
+        "@type": "MemberProgramTier",
+        "@id": "https://www.exemplo.com.br/clube#nivel-ouro"
+      }
+    }
+  }
+}
+```
+
+Duas regras da [documentação de listagem do comerciante](https://developers.google.com/search/docs/appearance/structured-data/merchant-listing): o valor de membro não pode ter `priceType`, e o valor riscado (`priceType` igual a `StrikethroughPrice`) não pode ter `validForMemberTier`. Especificação com as duas propriedades é ignorada. Se o programa também está configurado no Merchant Center, o Google usa a configuração de lá.
 
 ## Modelo para página de análise de produto
 
